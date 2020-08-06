@@ -10,14 +10,14 @@ import retrofit2.Response;
 
 public class HelloPluggyJava {
 
-  public static final String CLIENT_ID = "906a15c0-fdde-4dc5-9a23-df44455e1fb4";
-  public static final String CLIENT_SECRET = "6fc93aec-9166-417c-8363-669167a39ce4";
+  public static final String CLIENT_ID = System.getenv("PLUGGY_CLIENT_ID");
+  public static final String CLIENT_SECRET = System.getenv("PLUGGY_CLIENT_SECRET");
 
   public static void main(String[] args) throws IOException {
-
     // Use builder to create a client instance
     PluggyClient pluggyClient = PluggyClient.builder()
       .clientIdAndSecret(CLIENT_ID, CLIENT_SECRET)
+      .baseUrl("https://api.pluggy.ai")
       .build();
 
     // Define some request params (optional)
@@ -25,7 +25,7 @@ public class HelloPluggyJava {
       "Pluggy",
       Arrays.asList("AR")
     );
-    
+
     // Synchronously perform a request
     Response<ConnectorsResponse> connectorsResponse = pluggyClient.service()
       .getConnectors(connectorsSearchRequest)
